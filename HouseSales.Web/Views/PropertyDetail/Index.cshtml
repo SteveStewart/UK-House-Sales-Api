@@ -1,0 +1,40 @@
+﻿@using HouseSales.Domain
+@using HouseSales.Web.Models
+
+@model PropertyDetailViewModel
+
+
+<div class="container">
+
+    <h3>@Model.Summary.FullAddress</h3>
+    <h6>@Model.Summary.PropertyType</h6>
+
+    <p>Recorded Sales: <span class="label label-success"> @Model.Summary.NumberOfTransactions </span></p>
+
+    <table class="table table-striped">
+    
+        <thead>
+            <tr>
+                <th>Date of Sale</th>
+                <th>Sale Price</th>
+                <th>Holding</th>
+                <th>New build?</th>
+            </tr>
+        </thead>
+   
+        <tbody>
+
+            @foreach (var transaction in @Model.Transactions)
+            {
+                <tr>
+                    <td>@transaction.DateOfTransfer.ToShortDateString()</td>
+                    <td>@transaction.Price.ToString("c")</td>
+                    <td>@transaction.Holding.ToString()</td>
+                    <td>@(transaction.NewBuild ? "Yes" : "No")</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>

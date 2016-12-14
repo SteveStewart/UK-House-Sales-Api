@@ -1,0 +1,61 @@
+﻿@using HouseSales.Domain
+@using HouseSales.Web.HtmlHelpers
+@using HouseSales.Web.Properties
+
+@model HouseSales.Web.Models.PropertyListViewModel
+
+<div class="panel panel-default">
+    <table class="table table-hover" id="tblProperties">
+
+        <thead>
+            <tr>
+                <th>
+                    Address
+                    <div class="visible-sm"><br/></div>
+                    @Html.BootstrapSortByToggle(Resources.TXT_ADDRESS_ORDER_ASC_INPUT_NAME, OrderField.Address, OrderDirection.Ascending, Model.OrderBy)
+                    @Html.BootstrapSortByToggle(Resources.TXT_ADDRESS_ORDER_DESC_INPUT_NAME, OrderField.Address, OrderDirection.Descending, Model.OrderBy)
+                </th>
+                <th>
+                    Last Sale
+                    <div class="visible-sm"><br /></div>
+                    @Html.BootstrapSortByToggle(Resources.TXT_LAST_SALE_ORDER_ASC_INPUT_NAME, OrderField.LastSaleDate, OrderDirection.Ascending, Model.OrderBy)
+                    @Html.BootstrapSortByToggle(Resources.TXT_LAST_SALE_ORDER_DESC_INPUT_NAME, OrderField.LastSaleDate, OrderDirection.Descending, Model.OrderBy)
+                </th>
+                <th>
+                    Price paid
+                    <div class="visible-sm"><br /></div>
+                    @Html.BootstrapSortByToggle(Resources.TXT_PRICE_PAID_ORDER_ASC_INPUT_NAME, OrderField.LastSalePrice, OrderDirection.Ascending, Model.OrderBy)
+                    @Html.BootstrapSortByToggle(Resources.TXT_PRICE_PAID_ORDER_DESC_INPUT_NAME, OrderField.LastSalePrice, OrderDirection.Descending, Model.OrderBy)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (PropertySummary property in Model.PagedResults.Results)
+            {
+                <tr>
+                    <td class="col-xs-3">
+                        <b>@property.ShortAddress</b>
+                        <br /><br />
+                        @property.PropertyType.ToString()
+                    </td>
+                    <td class="col-xs-3">
+                        @property.LastDateOfTransfer.ToShortDateString()
+                        <br />
+                        <br/>
+                        <small> Recorded Sales: </small> <span class="property-detail"> @property.NumberOfTransactions </span>
+                    </td>
+                    <td class="col-xs-3">                       
+                        @property.LastSalePrice.ToString("c")
+                    </td>
+                    <td class="col-xs-1">
+                        @Html.ActionLink("View", "Index", "PropertyDetail", new { propertyId = property.PropertyId }, new { @class = "btn btn-default" }) 
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

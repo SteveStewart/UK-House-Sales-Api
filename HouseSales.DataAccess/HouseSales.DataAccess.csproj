@@ -62,6 +62,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Repositories\Sql\Indexes\IDX_NC_POSTCODE.sql" />
+    <Content Include="Repositories\Sql\Indexes\IDX_NC_PROPERTYID.sql" />
     <Content Include="Repositories\Sql\Procedures\GetPagedPropertySummaries.sql" />
     <Content Include="Repositories\Sql\Procedures\GetPropertySummaryByPropertyId.sql" />
     <Content Include="Repositories\Sql\Procedures\GetTransactionsByPropertyId.sql" />

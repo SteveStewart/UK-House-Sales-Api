@@ -1,0 +1,43 @@
+﻿@using HouseSales.Web.Models
+@using HouseSales.Domain
+@using HouseSales.Web.HtmlHelpers
+
+@model HouseSales.Web.Models.PropertyListViewModel
+
+@foreach (PropertySummary property in Model.PagedResults.Results)
+{
+    <div class="panel panel-default">
+
+        <div class="panel-heading property-header">
+            
+            <div class="row">
+                <span class="col-xs-10">
+                    <p class="property-title"> @property.ShortAddress </p>   
+                    <p class="property-subtitle">@property.PropertyType.ToString()</p>         
+                </span>
+                <span class="col-xs-2">
+                    @Html.ActionLink("View", "Index", "PropertyDetail", new { propertyId = property.PropertyId }, new { @class = "btn btn-default pull-right" })
+                </span>
+            </div>
+        </div>
+
+        <div class="panel-body col-xs-12 property-content">
+            <span class="col-xs-2">
+                <p class="property-subtitle">Sales</p>
+                <p class="lead property-detail">@property.NumberOfTransactions</p>
+            </span>
+
+            <span class="col-xs-4">
+                <p class="property-subtitle">Last Sold</p>
+                <p class="lead property-detail">@property.LastDateOfTransfer.ToShortDateString() </p>
+            </span>
+            <span class="col-xs-4">
+                <p class="property-subtitle">Price paid</p>
+                <p class="lead property-detail">
+                    @property.LastSalePrice.ToString("c")
+                </p>
+            </span>
+        </div>
+
+    </div>
+}

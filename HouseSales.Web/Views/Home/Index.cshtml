@@ -1,0 +1,34 @@
+﻿@model String
+@using HouseSales.Web.Properties
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("Resources")
+
+<div class="container">
+    <div class="jumbotron">
+            <h1>House Price Search...</h1>
+            <p class="text-info">A house price search demo app using the land registry data from 1995-2016.</p>
+            <br />       
+            @if (ViewData[Resources.TXT_POSTCODE_INVALID_VIEWDATA_KEY] != null)
+            {
+                <div class="container">
+                    <div class="alert alert-danger">@ViewData[Resources.TXT_POSTCODE_INVALID_VIEWDATA_KEY]</div>
+                </div>
+            }   
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-inline" }))
+            {
+                <div class="input-group input-group-lg">           
+                    <input name="@Resources.TXT_POSTCODE_INPUT_NAME" type="text" class="form-control" placeholder="Enter a postcode..." value="@Model">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" value="Search" type="submit">Search</button>
+                    </span>
+                </div>
+            }
+    </div>
+</div>
+
+
+

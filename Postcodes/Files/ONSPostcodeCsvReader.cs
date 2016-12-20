@@ -3,18 +3,17 @@ using Microsoft.VisualBasic.FileIO;
 using Postcodes.Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Postcodes.Files
 {
-    /// <summary>
-    /// An implementation of IPostcodeFileReader to retrieve data from a .csv file
-    /// </summary>
-    public class PostcodeCsvReader : IPostcodeFileReader
+    public class OnsPostcodeCsvReader : IPostcodeFileReader
     {
-        private const int IdIndex = 0;
-        private const int PostcodeIndex = 1;
-        private const int LatitudeIndex = 2;
-        private const int LongitudeIndex = 3;
+        private const int PostcodeIndex = 0;
+        private const int LatitudeIndex = 51;
+        private const int LongitudeIndex = 52;
 
         public IEnumerable<Postcode> GetPostcodesFromFile(string path)
         {
@@ -42,13 +41,13 @@ namespace Postcodes.Files
                     }
                     catch (MalformedLineException ex)
                     {
-                        Console.WriteLine("Row: {0}, Error: {1}", currentRow[IdIndex], ex.Message);
+                        Console.WriteLine("Row: {0}, Error: {1}", currentRow[PostcodeIndex], ex.Message);
                     }
                 }
 
                 return postCodeRecords.AsReadOnly();
             }
-        }    
+        }
 
         private Postcode BuildPostcodeFromFields(String[] fields)
         {
@@ -56,11 +55,17 @@ namespace Postcodes.Files
                 throw new ArgumentNullException("fields is null");
 
             Postcode newPostcode = new Postcode();
-            newPostcode.Id = int.Parse(fields[IdIndex]);
             newPostcode.Value = fields[PostcodeIndex];
 
             double latitude = double.Parse(fields[LatitudeIndex]);
+
+            if (!DecimalGeoCoordinate.IsValidLatitude(latitude))
+                latitude = 0f;
+
             double longitude = double.Parse(fields[LongitudeIndex]);
+
+            if (!DecimalGeoCoordinate.IsValidLongitude(longitude))
+                longitude = 0f;
 
             newPostcode.Location = new DecimalGeoCoordinate(latitude, longitude);
 

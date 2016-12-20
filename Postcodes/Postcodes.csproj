@@ -65,7 +65,7 @@
   <ItemGroup>
     <Compile Include="Domain\Postcode.cs" />
     <Compile Include="Files\IPostCodeFileReader.cs" />
-    <Compile Include="Files\PostCodeCsvReader.cs" />
+    <Compile Include="Files\OnsPostcodeCsvReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

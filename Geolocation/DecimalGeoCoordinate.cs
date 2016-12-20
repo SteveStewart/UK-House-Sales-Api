@@ -51,6 +51,21 @@ namespace Geolocation
             return distance;
         }
 
+        public static bool IsValidLongitude(double longitude)
+        {
+            if (longitude < -180 || longitude > 180)
+                return false;
+
+            return true;
+        }
+
+        public static bool IsValidLatitude(double latitude)
+        {
+            if (latitude < -90 || latitude > 90)
+                return false;
+
+            return true;
+        }
 
         #region Equality Overrides
 
@@ -107,22 +122,6 @@ namespace Geolocation
         #endregion
 
         #region Private Methods
-
-        private bool IsValidLongitude(double longitude)
-        {
-            if (longitude < -180 || longitude > 180)
-                return false;
-
-            return true;
-        }
-
-        private bool IsValidLatitude(double latitude)
-        {
-            if (latitude < -90 || latitude > 90)
-                return false;
-
-            return true;
-        }
 
         private void AssignLongitude(double longitude)
         {

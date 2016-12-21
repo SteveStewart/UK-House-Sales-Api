@@ -1,7 +1,7 @@
 ﻿
 CREATE TYPE [HouseSales].[PricePaidDataType] AS TABLE(
-	[TransactionId] [uniqueidentifier] NOT NULL,
-	[PropertyId] [uniqueidentifier] NOT NULL,
+	[TransactionId] [UNIQUEIDENTIFIER] NOT NULL,
+	[PropertyId] [INT] NOT NULL,
 	[Price] [decimal](18, 0) NOT NULL,
 	[DateOfTransfer] [datetime] NOT NULL,
 	[Postcode] [nvarchar](10) NOT NULL,

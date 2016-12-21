@@ -2,7 +2,7 @@
 GO
 
 CREATE PROCEDURE [HouseSales].[GetTransactionsByPropertyId]
-	@PropertyId UNIQUEIDENTIFIER
+	@PropertyId INT
 AS 
 BEGIN
 	

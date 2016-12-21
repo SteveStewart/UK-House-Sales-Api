@@ -53,7 +53,7 @@ BEGIN
 
 	CREATE TABLE #tmpSummaryTableUpdates
 	(
-		PropertyId			UNIQUEIDENTIFIER NOT NULL,
+		PropertyId			INT NOT NULL,
 		TransactionId		UNIQUEIDENTIFIER NOT NULL,
 		NumTransactions		INT
 	)

@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [HouseSales].[PropertyTransaction]
 (
-	[TransactionId] [uniqueidentifier] PRIMARY KEY,
-	[PropertyId] [uniqueidentifier] NOT NULL,
+	[TransactionId] [UNIQUEIDENTIFIER] PRIMARY KEY,
+	[PropertyId] [INT] NOT NULL,
 	[Price] [decimal](18, 0) NOT NULL,
 	[DateOfTransfer] [datetime] NOT NULL,
 	[Postcode] [nvarchar](10) NOT NULL,

@@ -52,7 +52,7 @@ namespace HouseSales.Repositories.SqlServer
             }
         }
 
-        public async Task<PropertySummary> GetSummaryById(Guid id)
+        public async Task<PropertySummary> GetSummaryById(int id)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -63,7 +63,7 @@ namespace HouseSales.Repositories.SqlServer
             }       
         }
 
-        public async Task<IEnumerable<PropertyTransaction>> GetTransactionsByPropertyId(Guid Id)
+        public async Task<IEnumerable<PropertyTransaction>> GetTransactionsByPropertyId(int Id)
         {
             using (var connection = new SqlConnection(_connectionString))
             {

@@ -8,7 +8,7 @@ namespace HouseSales.Domain
         /// <summary>
         /// The internal unique reference for the property
         /// </summary>
-        public Guid PropertyId { get; set; }
+        public int PropertyId { get; set; }
         /// <summary>
         /// The primary address of the property 
         /// </summary>

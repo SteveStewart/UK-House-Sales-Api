@@ -1,8 +1,8 @@
 ﻿
 CREATE TABLE [HouseSales].[PropertySummary]
 (
-	[PropertyId] [uniqueidentifier] PRIMARY KEY,
-	[TransactionId] [uniqueidentifier] NULL,
+	[PropertyId] [INT] PRIMARY KEY,
+	[TransactionId] [UNIQUEIDENTIFIER] NULL,
 	[NumTransactions] [int] NULL,
 	[LastUpdated] [datetime] NOT NULL,
 

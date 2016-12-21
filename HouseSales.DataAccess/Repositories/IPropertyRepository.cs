@@ -12,14 +12,14 @@ namespace HouseSales.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<PropertySummary> GetSummaryById(Guid id);
+        Task<PropertySummary> GetSummaryById(int id);
 
         /// <summary>
         /// Get the list of transactions for a property
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IEnumerable<PropertyTransaction>> GetTransactionsByPropertyId(Guid id);              
+        Task<IEnumerable<PropertyTransaction>> GetTransactionsByPropertyId(int id);              
 
         /// <summary>
         /// Find properties based on the search criteria

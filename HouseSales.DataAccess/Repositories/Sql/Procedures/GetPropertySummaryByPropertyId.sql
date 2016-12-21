@@ -3,7 +3,7 @@ DROP PROCEDURE IF EXISTS [HouseSales].[GetPropertySummaryByPropertyId]
 GO
 
 CREATE PROCEDURE [HouseSales].[GetPropertySummaryByPropertyId]
-	@PropertyId UNIQUEIDENTIFIER
+	@PropertyId INT
 AS
 BEGIN
 

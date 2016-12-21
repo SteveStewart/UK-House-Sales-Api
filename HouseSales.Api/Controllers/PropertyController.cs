@@ -18,7 +18,7 @@ namespace HouseSales.Api.Controllers
             _propertyRepository = propertyRepository;
         }
 
-        public async Task<IHttpActionResult> Get(Guid propertyId)
+        public async Task<IHttpActionResult> Get(int propertyId)
         {
             var summary = await _propertyRepository.GetSummaryById(propertyId);
 

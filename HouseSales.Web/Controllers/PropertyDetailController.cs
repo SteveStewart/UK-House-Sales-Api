@@ -18,7 +18,7 @@ namespace HouseSales.Web.Controllers
         }
 
         // GET: PropertyDetail
-        public async Task<ActionResult> Index(Guid propertyId)
+        public async Task<ActionResult> Index(int propertyId)
         {
             var summary = await _propertyRepository.GetSummaryById(propertyId);
             var transactions = await _propertyRepository.GetTransactionsByPropertyId(propertyId);

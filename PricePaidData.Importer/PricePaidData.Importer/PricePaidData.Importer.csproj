@@ -112,6 +112,10 @@
       <Project>{34031d67-681e-433e-bbb0-2ab04c376233}</Project>
       <Name>HouseSales.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\HouseSales.Files\HouseSales.Files.csproj">
+      <Project>{81cb39f0-1ed2-45a5-be9b-4dc5275e04b1}</Project>
+      <Name>HouseSales.Files</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">

@@ -2,7 +2,7 @@
 using Microsoft.VisualBasic.FileIO;
 using System.Collections.Generic;
 
-namespace HouseSales.Domain.Files
+namespace HouseSales.Files
 {
     /// <summary>
     /// Interface for a price data file reader

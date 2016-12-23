@@ -3,7 +3,7 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 
-namespace HouseSales.Domain.Files
+namespace HouseSales.Files
 {
     /// <summary>
     /// A csv reader for land registry price data

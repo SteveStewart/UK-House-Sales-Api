@@ -1,6 +1,7 @@
-﻿using System;
+﻿using HouseSales.Domain;
+using System;
 
-namespace HouseSales.Domain.Files
+namespace HouseSales.Files
 {
     /// <summary>
     /// Represents the price paid for a house

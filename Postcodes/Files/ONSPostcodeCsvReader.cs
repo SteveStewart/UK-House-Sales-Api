@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Postcodes.Files
@@ -55,7 +56,8 @@ namespace Postcodes.Files
                 throw new ArgumentNullException("fields is null");
 
             Postcode newPostcode = new Postcode();
-            newPostcode.Value = fields[PostcodeIndex].Replace("  ", " ");
+            newPostcode.Value = fields[PostcodeIndex];
+            newPostcode.Value = Regex.Replace(newPostcode.Value, @"\s+", " ");
 
             double latitude = double.Parse(fields[LatitudeIndex]);
 

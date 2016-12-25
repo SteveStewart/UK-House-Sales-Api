@@ -9,10 +9,6 @@ namespace Postcodes.Domain
     public class Postcode
     {
         /// <summary>
-        /// The idea of the postcode
-        /// </summary>
-        public int Id { get; set; }
-        /// <summary>
         /// The actual postcode value
         /// </summary>
         public String Value { get; set; }

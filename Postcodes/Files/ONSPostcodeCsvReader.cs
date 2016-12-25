@@ -11,7 +11,7 @@ namespace Postcodes.Files
 {
     public class OnsPostcodeCsvReader : IPostcodeFileReader
     {
-        private const int PostcodeIndex = 0;
+        private const int PostcodeIndex = 1;
         private const int LatitudeIndex = 51;
         private const int LongitudeIndex = 52;
 
@@ -55,7 +55,7 @@ namespace Postcodes.Files
                 throw new ArgumentNullException("fields is null");
 
             Postcode newPostcode = new Postcode();
-            newPostcode.Value = fields[PostcodeIndex];
+            newPostcode.Value = fields[PostcodeIndex].Replace("  ", " ");
 
             double latitude = double.Parse(fields[LatitudeIndex]);
 

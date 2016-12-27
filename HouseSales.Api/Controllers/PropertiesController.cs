@@ -18,7 +18,7 @@ namespace HouseSales.Api.Controllers
             _propertyRepository = propertyRepository;
         }
 
-        public async Task<IHttpActionResult> Get([ModelBinder]PropertiesRequestModel model)
+        public async Task<IHttpActionResult> Get([ModelBinder(typeof(PropertiesRequestModelBinder))] PropertiesRequestModel model)
         {
             ModelStateDictionary modelState = null;
 

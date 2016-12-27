@@ -108,6 +108,10 @@
     <None Include="Properties\webjob-publish-settings.json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Geolocation\Geolocation.csproj">
+      <Project>{34D634EA-6348-410A-94D1-A03A8E5F1659}</Project>
+      <Name>Geolocation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\HouseSales.Domain\HouseSales.Domain.csproj">
       <Project>{34031d67-681e-433e-bbb0-2ab04c376233}</Project>
       <Name>HouseSales.Domain</Name>
@@ -115,6 +119,10 @@
     <ProjectReference Include="..\..\HouseSales.Files\HouseSales.Files.csproj">
       <Project>{81cb39f0-1ed2-45a5-be9b-4dc5275e04b1}</Project>
       <Name>HouseSales.Files</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Postcodes\Postcodes.csproj">
+      <Project>{EC673636-E1C6-4F19-9250-2CB694AA16FA}</Project>
+      <Name>Postcodes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

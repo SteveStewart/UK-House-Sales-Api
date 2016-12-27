@@ -38,7 +38,7 @@ namespace HouseSales.Web.Infrastructure
 
         private IPropertyRepository GetPropertyRepository(IContext context)
         {
-            var connectionString = ConfigurationManager.ConnectionStrings["AzureHouseSalesSqlDb"].ToString();
+            var connectionString = ConfigurationManager.ConnectionStrings["HouseSalesSqlDb"].ToString();
 
             return new SqlServerPropertyRepository(connectionString);
         }

@@ -1,14 +1,17 @@
-﻿using HouseSales.Domain.Files;
+﻿using HouseSales.Files;
 using Microsoft.Azure.WebJobs;
 using Microsoft.VisualBasic.FileIO;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.File;
+using Postcodes.Domain;
+using Postcodes.Files;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -18,7 +21,7 @@ namespace PricePaidData.Importer
 {
     public class Program
     {
-        private static readonly int _batchSize = 2000;
+        private static readonly int _batchSize = 10000;
 
         public static void Main(string[] args)
         {
@@ -26,9 +29,22 @@ namespace PricePaidData.Importer
             host.RunAndBlock();
         }
 
-      /*  public static void Main(string[] args)
+    /*    public static void Main(string[] args)
         {
-            ImportFile("test");
+            var files = Directory.GetFiles(@"D:\Code\Projects\House Price Data\dataset", "pp-????.csv");
+
+            var postcodeReader = new OnsPostcodeCsvReader();
+            var postcodes = postcodeReader.GetPostcodesFromFile(@"D:\Code\Projects\House Price Data\postcode-data\ONSPD_MAY_2016_UK.csv");
+
+            ImportPostcodes(postcodes);
+
+            foreach (var file in files)
+            {
+                var csvRows = GetPricePaidDataFromLocalFile(file);
+                ImportPricePaidCsvData(Path.GetFileName(file), csvRows);
+            }
+
+            Console.ReadKey();
         }*/
                
         [Singleton]
@@ -38,8 +54,13 @@ namespace PricePaidData.Importer
             var cloudShare = GetCloudFileShare();
             var file = GetFile(cloudShare, filename);
             var csvRows = GetPricePaidDataFromCloudFile(file);
-            
-            var dbConnectionString = ConfigurationManager.ConnectionStrings["AzureHouseSalesSqlDb"];
+
+            ImportPricePaidCsvData(filename, csvRows);
+        }
+
+        private static void ImportPricePaidCsvData(String filename, List<HouseSaleDataCsvRow> csvRows)
+        {
+            var dbConnectionString = ConfigurationManager.ConnectionStrings["HouseSalesSqlDb"];
             var sw = new Stopwatch();
 
             do
@@ -58,15 +79,77 @@ namespace PricePaidData.Importer
 
                 csvRows.RemoveRange(0, csvRows.Count > _batchSize ? _batchSize : csvRows.Count);
                 Console.WriteLine("({2}) Batch finished in {0}. {1} remaining...", sw.Elapsed, csvRows.Count, filename);
-                                   
-            } while (csvRows.Count > 0) ;
+
+            } while (csvRows.Count > 0);
         }
+
+        private static void ImportPostcodes(IEnumerable<Postcode> postcodes)
+        {
+            var dbConnectionString = ConfigurationManager.ConnectionStrings["HouseSalesSqlDb"];
+            var dataTable = GetPostcodeDataTable(postcodes);
+
+            using (var connection = new SqlConnection(dbConnectionString.ToString()))
+            using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 2, 0)))
+            {
+                connection.Open();
+
+                InsertPostcodes(connection, postcodes);
+                transactionScope.Complete();
+            }
+        }
+
+        private static void InsertPostcodes(SqlConnection connection, IEnumerable<Postcode> postcodes)
+        {
+            var dataTable = GetPostcodeDataTable(postcodes);
+
+            SqlCommand command = new SqlCommand("HouseSales.InsertPostcodeBatch", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandTimeout = 240;
+
+            SqlParameter batchParam = new SqlParameter("@batch", SqlDbType.Structured);
+            batchParam.Value = dataTable;
+
+            command.Parameters.Add(batchParam);
+            command.ExecuteNonQuery();
+        }
+
+        private static void UpdatePropertySummaries()
+        {
+            var dbConnectionString = ConfigurationManager.ConnectionStrings["HouseSalesSqlDb"];
+
+            using (var connection = new SqlConnection(dbConnectionString.ToString()))
+            using (var transactionScope = new TransactionScope(TransactionScopeOption.RequiresNew, new TimeSpan(2, 2, 0)))
+            {
+                SqlCommand command = new SqlCommand("HouseSales.UpdatePropertySummaries", connection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandTimeout = 600;
+
+                command.ExecuteNonQuery();
+            }
+        }
+
+        private static DataTable GetPostcodeDataTable(IEnumerable<Postcode> postcodes)
+        {
+            DataTable table = new DataTable("PostcodeDataType");
+
+            table.Columns.Add("Postcode", typeof(String));
+            table.Columns.Add("Latitude", typeof(float));
+            table.Columns.Add("Longitude", typeof(float));
+
+            foreach (var postcode in postcodes)
+            {
+                table.Rows.Add(postcode.Value, postcode.Location.Latitude, postcode.Location.Longitude);
+            }
+
+            return table;
+        }
+
 
         private static void InsertProperties(SqlConnection connection, List<HouseSaleDataCsvRow> properties)
         {
-            var datatable = GetDataTable(properties);
+            var datatable = GetPropertyDataTable(properties);
 
-            SqlCommand command = new SqlCommand("InsertPricePaidBatch", connection);
+            SqlCommand command = new SqlCommand("HouseSales.InsertPricePaidBatch", connection);
             command.CommandType = CommandType.StoredProcedure;
             command.CommandTimeout = 240;
 
@@ -77,12 +160,12 @@ namespace PricePaidData.Importer
             command.ExecuteNonQuery();
         }
 
-        private static DataTable GetDataTable(List<HouseSaleDataCsvRow> properties)
+        private static DataTable GetPropertyDataTable(List<HouseSaleDataCsvRow> properties)
         {
             DataTable table = new DataTable("PricePaidDataType");
 
             table.Columns.Add("TransactionId", typeof(Guid));
-            table.Columns.Add("PropertyId", typeof(Guid));
+            table.Columns.Add("PropertyId", typeof(int));
             table.Columns.Add("Price", typeof(Decimal));
             table.Columns.Add("DateOfTransfer", typeof(DateTime));
             table.Columns.Add("Postcode", typeof(String));
@@ -126,23 +209,38 @@ namespace PricePaidData.Importer
         }
 
         /// <summary>
-        /// Generate a hash from a HouseSaleDataCsvRow
+        /// Generate a property Id from a HouseSaleDataCsvRow
         /// </summary>
         /// <param name="row"></param>
         /// <returns></returns>
-        private static Guid GetPropertyIdFromRow(HouseSaleDataCsvRow row)
+        private static int GetPropertyIdFromRow(HouseSaleDataCsvRow row)
         {
             var hashString = (row.PrimaryAddressName + row.SecondaryAddressName + row.Postcode).GetHashCode().ToString();
             using (MD5 md5 = MD5.Create())
             {
                 byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(hashString));
 
-                return new Guid(hash);
+                return Math.Abs(BitConverter.ToInt32(hash,0));
+            }
+        }
+
+        private static List<HouseSaleDataCsvRow> GetPricePaidDataFromLocalFile(String filePath)
+        {
+            Console.WriteLine("Loading csv '{0}'...", filePath);
+
+            using (var fileStream = File.OpenRead(filePath))
+            using (var parser = new TextFieldParser(fileStream))
+            {
+                var csvReader = new LandRegistryPriceDataCsvReader(parser);
+
+                return csvReader.GetRows().ToList();
             }
         }
 
         private static List<HouseSaleDataCsvRow> GetPricePaidDataFromCloudFile(CloudFile file)
         {
+            Console.WriteLine("Loading csv '{0}'...", file.Name);
+
             using (var fileStream = file.OpenRead())
             using (var parser = new TextFieldParser(fileStream))
             {

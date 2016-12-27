@@ -127,7 +127,6 @@
     <Content Include="Content\bootstrap-select.css.map" />
     <None Include="Properties\PublishProfiles\ukhousesales.pubxml" />
     <Content Include="Scripts\bootstrap-select.js.map" />
-    <Content Include="Properties\webjobs-list.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.js" />
     <Content Include="Scripts\i18n\defaults-ar_AR.min.js" />
@@ -263,10 +262,6 @@
     <ProjectReference Include="..\HouseSales.Domain\HouseSales.Domain.csproj">
       <Project>{34031d67-681e-433e-bbb0-2ab04c376233}</Project>
       <Name>HouseSales.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Postcodes\Postcodes.csproj">
-      <Project>{ec673636-e1c6-4f19-9250-2cb694aa16fa}</Project>
-      <Name>Postcodes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

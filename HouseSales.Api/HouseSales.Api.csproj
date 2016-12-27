@@ -147,6 +147,14 @@
       <Project>{34031d67-681e-433e-bbb0-2ab04c376233}</Project>
       <Name>HouseSales.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Postcodes.DataAccess\Postcodes.DataAccess.csproj">
+      <Project>{5B3EEB37-CD36-4D31-8CA7-509BA4E5E20A}</Project>
+      <Name>Postcodes.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Postcodes.Domain\Postcodes.Domain.csproj">
+      <Project>{ec673636-e1c6-4f19-9250-2cb694aa16fa}</Project>
+      <Name>Postcodes.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\" />

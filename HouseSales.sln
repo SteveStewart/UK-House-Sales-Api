@@ -21,6 +21,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "HouseSales.Database", "Hous
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postcodes.Domain", "Postcodes.Domain\Postcodes.Domain.csproj", "{EC673636-E1C6-4F19-9250-2CB694AA16FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Postcodes.DataAccess", "Postcodes.DataAccess\Postcodes.DataAccess.csproj", "{5B3EEB37-CD36-4D31-8CA7-509BA4E5E20A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,14 @@ Global
 		{EC673636-E1C6-4F19-9250-2CB694AA16FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EC673636-E1C6-4F19-9250-2CB694AA16FA}.Release|x64.ActiveCfg = Release|x64
 		{EC673636-E1C6-4F19-9250-2CB694AA16FA}.Release|x64.Build.0 = Release|x64
+		{5B3EEB37-CD36-4D31-8CA7-509BA4E5E20A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B3EEB37-CD36-4D31-8CA7-509BA4E5E20A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B3EEB37-CD36-4D31-8CA7-509BA4E5E20A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5B3EEB37-CD36-4D31-8CA7-509BA4E5E20A}.Debug|x64.Build.0 = Debug|Any CPU
+		{5B3EEB37-CD36-4D31-8CA7-509BA4E5E20A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B3EEB37-CD36-4D31-8CA7-509BA4E5E20A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B3EEB37-CD36-4D31-8CA7-509BA4E5E20A}.Release|x64.ActiveCfg = Release|Any CPU
+		{5B3EEB37-CD36-4D31-8CA7-509BA4E5E20A}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

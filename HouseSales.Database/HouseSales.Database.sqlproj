@@ -80,5 +80,7 @@
     <Build Include="HouseSales\Stored Procedures\InsertPostcodeBatch.sql" />
     <Build Include="HouseSales\User Defined Types\PostcodeDataType.sql" />
     <Build Include="HouseSales\Stored Procedures\UpdatePropertySummaries.sql" />
+    <Build Include="HouseSales\Stored Procedures\GetPostcodeByValue.sql" />
+    <Build Include="HouseSales\Stored Procedures\SearchPostcodesByValue.sql" />
   </ItemGroup>
 </Project>

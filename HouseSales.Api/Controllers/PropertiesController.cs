@@ -1,8 +1,7 @@
 ﻿using HouseSales.Api.Infrastructure;
 using HouseSales.Domain;
 using HouseSales.Repositories;
-using System.Net;
-using System.Net.Http;
+using Postcodes.Repositories;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
@@ -12,18 +11,20 @@ namespace HouseSales.Api.Controllers
     public class PropertiesController : ApiController
     {
         private readonly IPropertyRepository _propertyRepository;
+        private readonly IPostcodeRepository _postcodeRepository;
 
-        public PropertiesController(IPropertyRepository propertyRepository)
+        public PropertiesController(IPropertyRepository propertyRepository, IPostcodeRepository postcodeRepository)
         {
             _propertyRepository = propertyRepository;
+            _postcodeRepository = postcodeRepository;
         }
 
         public async Task<IHttpActionResult> Get([ModelBinder(typeof(PropertiesRequestModelBinder))] PropertiesRequestModel model)
         {
-            ModelStateDictionary modelState = null;
+            ModelStateDictionary modelState = await ValidateModel(model);
 
-            if (!TryValidate(model, out modelState))
-                return BadRequest(modelState);            
+            if (modelState.Count > 0)
+                return BadRequest(modelState);
 
             var findCriteria = model.ToFindCriteria(500);
             var orderBy = model.OrderBy;
@@ -34,19 +35,16 @@ namespace HouseSales.Api.Controllers
             return Ok(result);
         }
 
-        public bool TryValidate(PropertiesRequestModel model, out ModelStateDictionary modelState)
+        public async Task<ModelStateDictionary> ValidateModel(PropertiesRequestModel model)
         {
             var modelStateDictionary = new ModelStateDictionary();
-            bool isValid = true;
-            
-            if (model.Postcode.Length < 4)
-            {
-                isValid = false;
-                modelStateDictionary.AddModelError("Postcode", "Postcode search string must be greater than 3 characters");
-            }
 
-            modelState = modelStateDictionary;
-            return isValid;
+            var existingPostcode = await _postcodeRepository.GetPostcode(model.Postcode);
+
+            if (existingPostcode == null)
+                modelStateDictionary.AddModelError("Postcode", "Postcode does not exist.");
+
+            return modelStateDictionary;
         }
     }
 }

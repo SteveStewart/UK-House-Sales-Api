@@ -1,11 +1,8 @@
 ﻿using HouseSales.Repositories;
 using HouseSales.Repositories.SqlServer;
 using Ninject;
-using System;
-using System.Collections.Generic;
+using Postcodes.Repositories;
 using System.Configuration;
-using System.Linq;
-using System.Web;
 
 namespace HouseSales.Api.Infrastructure
 {
@@ -17,7 +14,10 @@ namespace HouseSales.Api.Infrastructure
             var connectionString = ConfigurationManager.ConnectionStrings["HouseSalesSqlDb"].ToString();
 
             kernel.Bind<IPropertyRepository>()
-                .To<SqlServerPropertyRepository>().WithConstructorArgument("connectionString", connectionString.ToString());
+                .To<SqlServerPropertyRepository>().WithConstructorArgument("connectionString", connectionString);
+
+            kernel.Bind<IPostcodeRepository>()
+                .To<SqlServerPostcodeRepository>().WithConstructorArgument("connectionString", connectionString);
 
             return kernel;
         }

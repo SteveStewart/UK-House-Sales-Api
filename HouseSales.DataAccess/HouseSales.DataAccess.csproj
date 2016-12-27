@@ -60,17 +60,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Content Include="Repositories\Sql\Indexes\IDX_NC_POSTCODE.sql" />
-    <Content Include="Repositories\Sql\Indexes\IDX_NC_PROPERTYID.sql" />
-    <Content Include="Repositories\Sql\Procedures\GetPagedPropertySummaries.sql" />
-    <Content Include="Repositories\Sql\Procedures\GetPropertySummaryByPropertyId.sql" />
-    <Content Include="Repositories\Sql\Procedures\GetTransactionsByPropertyId.sql" />
-    <Content Include="Repositories\Sql\Procedures\InsertPricePaidBatch.sql" />
-    <Content Include="Repositories\Sql\Schema\PropertySummary.sql" />
-    <Content Include="Repositories\Sql\Schema\PropertyTransaction.sql" />
-    <Content Include="Repositories\Sql\TablesTypes\PricePaidDataType.sql" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

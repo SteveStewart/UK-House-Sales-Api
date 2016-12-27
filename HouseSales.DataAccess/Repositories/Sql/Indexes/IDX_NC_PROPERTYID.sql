@@ -1,6 +1,0 @@
-﻿
-CREATE NONCLUSTERED INDEX [IDX_NC_PROPERTYID] ON [HouseSales].[PropertyTransaction]
-(
-	[PROPERTYID] ASC
-)
-GO

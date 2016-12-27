@@ -1,6 +1,4 @@
-﻿DROP PROCEDURE IF EXISTS [HouseSales].[GetTransactionsByPropertyId]
-GO
-
+﻿
 CREATE PROCEDURE [HouseSales].[GetTransactionsByPropertyId]
 	@PropertyId INT
 AS 
@@ -27,6 +25,3 @@ BEGIN
   WHERE		PropertyId = @PropertyId
 
 END
-GO
-
-

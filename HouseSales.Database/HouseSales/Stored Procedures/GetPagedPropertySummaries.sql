@@ -1,7 +1,4 @@
-﻿DROP PROCEDURE IF EXISTS [HouseSales].[GetPagedPropertySummaries]
-GO
-
--- EXEC [HouseSales].[GetPagedPropertySummaries] 'EC3%',1, 25, NULL, NULL, 0,1
+﻿-- EXEC [HouseSales].[GetPagedPropertySummaries] 'EC3%',1, 25, NULL, NULL, 0,1
 
 CREATE PROCEDURE [HouseSales].[GetPagedPropertySummaries]
 	@Postcode		NVARCHAR(10) = '',
@@ -14,6 +11,18 @@ CREATE PROCEDURE [HouseSales].[GetPagedPropertySummaries]
 	@ResultLimit	INT = 500
 AS
 BEGIN
+
+	CREATE TABLE #tmpPostcodes
+	(
+		PostcodeId	INT NOT NULL
+	)
+
+	-- Reduced to a single postcode to decrease load on the cheap n' nasty azure SQL instance
+	-- Ideally should be a LIKE postcode + '%' to search on partial postcodes.
+	INSERT INTO #tmpPostcodes
+	SELECT	Id 
+	FROM	HouseSales.Postcode 
+	WHERE	Postcode = @Postcode
 
 	;WITH result AS 
 	(
@@ -32,7 +41,7 @@ BEGIN
 					summary.NumTransactions AS [NumberOfTransactions]
 		FROM		HouseSales.PropertySummary AS summary WITH(NOLOCK)
 		INNER JOIN	HouseSales.PropertyTransaction AS trans WITH(NOLOCK) ON summary.PropertyId = trans.PropertyId AND summary.TransactionId = trans.TransactionId
-		WHERE		Postcode LIKE @Postcode + '%'
+		WHERE		PostcodeId IN (	SELECT PostcodeId FROM #tmpPostcodes )
 		AND			(@PropertyType IS NULL OR @PropertyType = trans.PropertyType)
 		AND			(@SoldAfter IS NULL OR @SoldAfter < trans.DateOfTransfer)
 
@@ -67,6 +76,4 @@ BEGIN
 	OFFSET		(@Page * @RowsPerPage) ROWS FETCH NEXT @RowsPerPage ROWS ONLY
 		
 END
-GO
-
 

@@ -1,7 +1,4 @@
 ﻿
-DROP PROCEDURE IF EXISTS [HouseSales].[GetPropertySummaryByPropertyId]
-GO
-
 CREATE PROCEDURE [HouseSales].[GetPropertySummaryByPropertyId]
 	@PropertyId INT
 AS
@@ -25,7 +22,4 @@ BEGIN
 	WHERE		@PropertyId = summary.PropertyId
 
 END
-
-GO
-
 

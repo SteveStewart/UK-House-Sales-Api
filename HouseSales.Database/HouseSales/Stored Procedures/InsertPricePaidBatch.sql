@@ -1,8 +1,6 @@
-﻿DROP PROCEDURE IF EXISTS [HouseSales].[InsertPricePaidBatch]
-GO
-
+﻿
 CREATE PROCEDURE [HouseSales].[InsertPricePaidBatch]
-	@batch As [HouseSales].[PricePaidDataType] READONLY
+	@batch As [HouseSales].[PricePaidDataType] READONLY 
 AS
 BEGIN
 	
@@ -49,41 +47,8 @@ BEGIN
 	INNER JOIN	#tmpAdditions AS addition ON addition.TransactionId = batch.TransactionId
 	WHERE		batch.RecordStatus = 0 -- Addition
 
-	-- Split into separate sproc
+	EXEC HouseSales.UpdatePropertySummaries @batch
 
-	CREATE TABLE #tmpSummaryTableUpdates
-	(
-		PropertyId			INT NOT NULL,
-		TransactionId		UNIQUEIDENTIFIER NOT NULL,
-		NumTransactions		INT
-	)
-
-	INSERT INTO		#tmpSummaryTableUpdates
-	SELECT			DISTINCT	trans.PropertyId, 
-								trans.TransactionId,
-					(SELECT COUNT(1) FROM [HouseSales].PropertyTransaction AS c WITH(NOLOCK) WHERE c.PropertyId = trans.PropertyId)
-	FROM			[HouseSales].PropertyTransaction AS trans WITH(NOLOCK)
-	INNER JOIN		@batch AS batch ON batch.PropertyId = trans.PropertyId
-	WHERE			trans.TransactionId = (	SELECT TOP 1 in_trans.TransactionId
-											FROM [HouseSales].PropertyTransaction AS in_trans WITH(NOLOCK) 
-											WHERE in_trans.PropertyId = trans.PropertyId
-											ORDER BY DateOfTransfer DESC	)
-
-	MERGE	[HouseSales].[PropertySummary] WITH(HOLDLOCK) AS target
-	USING	#tmpSummaryTableUpdates AS source ON (target.PropertyId = source.PropertyId)
-	WHEN 	NOT MATCHED BY target THEN 
-				INSERT (PropertyId, TransactionId, NumTransactions,LastUpdated)
-				VALUES(source.PropertyId, source.TransactionId, source.NumTransactions, GETDATE())
-	WHEN	MATCHED AND (source.TransactionId != target.TransactionId) THEN
-				UPDATE
-				SET		target.TransactionId = source.TransactionId,
-						target.NumTransactions = source.NumTransactions, 
-						target.LastUpdated = GETDATE();
-
-	DROP TABLE #tmpSummaryTableUpdates
-	DROP TABLE	#tmpAdditions
+	DROP TABLE #tmpAdditions
 
 END
-GO
-
-

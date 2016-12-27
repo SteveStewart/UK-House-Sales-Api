@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseSales.Web", "HouseSale
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseSales.Files", "HouseSales.Files\HouseSales.Files.csproj", "{81CB39F0-1ED2-45A5-BE9B-4DC5275E04B1}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "HouseSales.Database", "HouseSales.Database\HouseSales.Database.sqlproj", "{57F17DDF-5751-46F9-9561-AA378A631D2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,18 @@ Global
 		{81CB39F0-1ED2-45A5-BE9B-4DC5275E04B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81CB39F0-1ED2-45A5-BE9B-4DC5275E04B1}.Release|x64.ActiveCfg = Release|Any CPU
 		{81CB39F0-1ED2-45A5-BE9B-4DC5275E04B1}.Release|x64.Build.0 = Release|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Debug|x64.Build.0 = Debug|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Debug|x64.Deploy.0 = Debug|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Release|x64.ActiveCfg = Release|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Release|x64.Build.0 = Release|Any CPU
+		{57F17DDF-5751-46F9-9561-AA378A631D2F}.Release|x64.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

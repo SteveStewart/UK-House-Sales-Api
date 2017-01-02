@@ -18,6 +18,11 @@ namespace HouseSales.Api.Controllers
             _propertyRepository = propertyRepository;
         }
 
+        /// <summary>
+        /// Get a property specified by the propertyId
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <returns></returns>
         public async Task<IHttpActionResult> Get(int propertyId)
         {
             var summary = await _propertyRepository.GetSummaryById(propertyId);

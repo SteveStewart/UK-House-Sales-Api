@@ -11,8 +11,17 @@ namespace HouseSales.Domain
     /// </summary>
     public enum HoldingType
     {
+        /// <summary>
+        /// A freehold lease
+        /// </summary>
         Freehold,
+        /// <summary>
+        /// A leasehold lease
+        /// </summary>
         Leasehold,
+        /// <summary>
+        /// Unknown
+        /// </summary>
         Unknown
     }
 

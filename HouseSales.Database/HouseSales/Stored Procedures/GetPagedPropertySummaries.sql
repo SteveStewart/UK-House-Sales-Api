@@ -12,15 +12,9 @@ CREATE PROCEDURE [HouseSales].[GetPagedPropertySummaries]
 AS
 BEGIN
 
-	CREATE TABLE #tmpPostcodes
-	(
-		PostcodeId	INT NOT NULL
-	)
+	DECLARE @PostcodeId INT
 
-	-- Reduced to a single postcode to decrease load on the cheap n' nasty azure SQL instance
-	-- Ideally should be a LIKE postcode + '%' to search on partial postcodes.
-	INSERT INTO #tmpPostcodes
-	SELECT	Id 
+	SELECT	@PostcodeId = Id 
 	FROM	HouseSales.Postcode 
 	WHERE	Postcode = @Postcode
 
@@ -41,7 +35,7 @@ BEGIN
 					summary.NumTransactions AS [NumberOfTransactions]
 		FROM		HouseSales.PropertySummary AS summary WITH(NOLOCK)
 		INNER JOIN	HouseSales.PropertyTransaction AS trans WITH(NOLOCK) ON summary.PropertyId = trans.PropertyId AND summary.TransactionId = trans.TransactionId
-		WHERE		PostcodeId IN (	SELECT PostcodeId FROM #tmpPostcodes )
+		WHERE		PostcodeId = @PostcodeId
 		AND			(@PropertyType IS NULL OR @PropertyType = trans.PropertyType)
 		AND			(@SoldAfter IS NULL OR @SoldAfter < trans.DateOfTransfer)
 

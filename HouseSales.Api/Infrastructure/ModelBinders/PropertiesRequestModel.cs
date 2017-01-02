@@ -1,6 +1,7 @@
 ﻿using HouseSales.Domain;
 using HouseSales.Repositories;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace HouseSales.Api.Infrastructure
 {
@@ -10,13 +11,14 @@ namespace HouseSales.Api.Infrastructure
         {
             SetDefaultValues();
         }
-        
+
         /// <summary>
         /// The search postcode
         /// </summary>
+        [Required]        
         public String Postcode { get; set; }
         /// <summary>
-        /// The current page on the view
+        /// The current page
         /// </summary>
         public int Page { get; set; }
         /// <summary>

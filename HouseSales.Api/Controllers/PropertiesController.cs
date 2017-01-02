@@ -1,4 +1,5 @@
 ﻿using HouseSales.Api.Infrastructure;
+using HouseSales.Api.Infrastructure.Swagger;
 using HouseSales.Domain;
 using HouseSales.Repositories;
 using Postcodes.Repositories;
@@ -20,6 +21,11 @@ namespace HouseSales.Api.Controllers
             _postcodeRepository = postcodeRepository;
         }
 
+        /// <summary>
+        /// Get a paged list of properties based on the specified criteria.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<IHttpActionResult> Get([ModelBinder(typeof(PropertiesRequestModelBinder))] PropertiesRequestModel model)
         {
             ModelStateDictionary modelState = await ValidateModel(model);
@@ -36,7 +42,7 @@ namespace HouseSales.Api.Controllers
             return Ok(result);
         }
 
-        public async Task<ModelStateDictionary> ValidateModel(PropertiesRequestModel model)
+        private async Task<ModelStateDictionary> ValidateModel(PropertiesRequestModel model)
         {
             var modelStateDictionary = new ModelStateDictionary();
 

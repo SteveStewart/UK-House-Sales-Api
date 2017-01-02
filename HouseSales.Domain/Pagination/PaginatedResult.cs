@@ -3,6 +3,10 @@ using System.Collections;
 
 namespace HouseSales.Domain
 {
+    /// <summary>
+    /// A container for a paginated result of type T
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class PaginatedResult<T> where T : IEnumerable
     {
         public PaginatedResult(T results, int page, int pageLimit, int totalItems)

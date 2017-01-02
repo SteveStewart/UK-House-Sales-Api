@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace HouseSales.Api.Controllers
 {
@@ -23,6 +24,7 @@ namespace HouseSales.Api.Controllers
         /// </summary>
         /// <param name="propertyId"></param>
         /// <returns></returns>
+        [ResponseType(typeof(PropertySummaryWithTransactions))]
         public async Task<IHttpActionResult> Get(int propertyId)
         {
             var summary = await _propertyRepository.GetSummaryById(propertyId);

@@ -4,8 +4,10 @@ using HouseSales.Domain;
 using HouseSales.Repositories;
 using Postcodes.Repositories;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 using System.Web.Http.ModelBinding;
 
 namespace HouseSales.Api.Controllers
@@ -26,6 +28,7 @@ namespace HouseSales.Api.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
+        [ResponseType(typeof(PaginatedResult<IEnumerable<PropertySummary>>))]
         public async Task<IHttpActionResult> Get([ModelBinder(typeof(PropertiesRequestModelBinder))] PropertiesRequestModel model)
         {
             ModelStateDictionary modelState = await ValidateModel(model);

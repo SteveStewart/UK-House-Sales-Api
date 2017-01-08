@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System;
 using Dapper;
 using System.Data;
+using Geolocation;
 
 namespace Postcodes.Repositories
 {
@@ -38,7 +39,10 @@ namespace Postcodes.Repositories
                 connection.Open();
 
                 String spName = "HouseSales.SearchPostcodesByValue";
-                return await connection.QueryAsync<Postcode>(spName, new { PostcodeValue = postcodeValue, Limit = limit }, commandType: CommandType.StoredProcedure);
+                return await connection.QueryAsync<Postcode>(
+                    sql: spName, 
+                    param: new { PostcodeValue = postcodeValue, Limit = limit }, 
+                    commandType: CommandType.StoredProcedure);
             }
         }
 

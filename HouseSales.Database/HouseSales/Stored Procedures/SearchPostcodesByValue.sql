@@ -6,9 +6,9 @@ BEGIN
 	
 	SELECT	TOP (@Limit) 
 			Id,
-			Postcode,
-			Latitude,
-			Longitude
+			Postcode AS [Value],
+			Latitude AS [Latitude],
+			Longitude AS [Longitude]
 	FROM	HouseSales.Postcode
 	WHERE	Postcode LIKE @PostcodeValue + '%'
 
